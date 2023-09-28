@@ -20,6 +20,7 @@ dependencies {
     implementation("io.micronaut.views:micronaut-views-handlebars")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("org.yaml:snakeyaml")
     testImplementation("io.micronaut:micronaut-http-client")
 }
 
