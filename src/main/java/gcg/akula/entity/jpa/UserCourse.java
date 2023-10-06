@@ -8,27 +8,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "lesson")
-public class Lesson {
+@Table(name = "user_course")
+public class UserCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @NotNull
-    @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
-    private String name;
-
-    @NotNull
-    @Column(name = "content", nullable = false, length = Integer.MAX_VALUE)
-    private String content;
-
-    @Column(name = "description", length = Integer.MAX_VALUE)
-    private String description;
-
-    @NotNull
-    @Column(name = "index", nullable = false)
-    private Integer index;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "uid", nullable = false)
+    private User uid;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

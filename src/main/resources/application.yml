@@ -9,11 +9,11 @@ micronaut:
   server:
     port: ${PORT:8080}
     idle-timeout: 10m
-    max-request-size: '100MB'
+    max-request-size: '100'
     multipart:
       enabled: true
-      max-file-size: '100MB'
-      threshold: '100MB'
+      max-file-size: '100'
+      threshold: '100'
       mixed: true
     cors:
       enabled: true

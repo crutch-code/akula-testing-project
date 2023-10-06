@@ -1,55 +1,41 @@
 package gcg.akula.entity.jpa;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
-
+@Getter
+@Setter
 @Entity
-@Table(name = "news", schema = "public")
+@Table(name = "news")
 public class News {
     @Id
-    @SequenceGenerator(name = "news_id_seq", sequenceName = "public.news_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "news_id_seq")
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
+
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "title", nullable = false)
     private String title;
+
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "content", nullable = false)
     private String content;
-    @Column(name = "publish_date", nullable = false)
-    private LocalDateTime publishDate;
-    private long author;
 
-    public Long getId() {
-        return id;
-    }
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "author", nullable = false)
+    private User author;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public LocalDateTime getPublishDate() {
-        return publishDate;
-    }
-
-    public long getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(long author) {
-        this.author = author;
-    }
+/*
+    TODO [JPA Buddy] create field to map the 'publish_date' column
+     Available actions: Define target Java type | Uncomment as is | Remove column mapping
+    @Column(name = "publish_date", columnDefinition = "timestamp(6) not null")
+    private Object publishDate;
+*/
 }
