@@ -17,10 +17,6 @@ micronaut:
       mixed: true
     cors:
       enabled: true
-    ssl:
-      enabled: false
-      port: 443
-      build-self-signed: true
   router:
     static-resources:
       static:
