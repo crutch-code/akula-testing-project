@@ -29,4 +29,8 @@ public class UserLesson {
     @Column(name = "status", nullable = false)
     private Integer status;
 
+
+    public Long getId() {
+        return id;
+    }
 }

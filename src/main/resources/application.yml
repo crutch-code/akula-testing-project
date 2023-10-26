@@ -21,12 +21,42 @@ micronaut:
       enabled: false
       port: 443
       build-self-signed: true
+  router:
+    static-resources:
+      static:
+        paths: classpath:web
+        mapping: /**
+  metrics:
+    enabled: true
+    export:
+      prometheus:
+        enabled: true
+        step: PT1M
+        descriptions: true
+endpoints:
+  all:
+    port: 8081
+  loggers:
+    enabled: true
+    sensitive: false
+    write-sensitive: false
+  prometheus:
+    sensitive: false
+  info:
+    enabled: true
+    sensitive: false
+  health:
+    enabled: true
+    sensitive: false
+    details-visible: ANONYMOUS
+    url:
+      enabled: true
 
 datasources:
   default:
-    url: ${JDBC_URL:`jdbc:postgresql://localhost:5432/akula-project`}
-    username: ${JDBC_USER:hcs}
-    password: ${JDBC_PASSWORD:hcs}
+    url: ${JDBC_URL:`jdbc:postgresql://localhost:5432/akula`}?ApplicationName=${micronaut.application.name}
+    username: ${JDBC_USER:akula}
+    password: ${JDBC_PASSWORD:akula}
     driverClassName: ${JDBC_DRIVER:org.postgresql.Driver}
     maximum-pool-size: 15
     idle-timeout: 30000

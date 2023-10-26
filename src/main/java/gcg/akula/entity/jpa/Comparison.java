@@ -30,4 +30,7 @@ public class Comparison {
     @JoinColumn(name = "qid", nullable = false)
     private Question qid;
 
+    public Long getId() {
+        return id;
+    }
 }

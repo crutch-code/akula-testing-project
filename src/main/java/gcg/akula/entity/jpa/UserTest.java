@@ -29,4 +29,8 @@ public class UserTest {
     @Column(name = "points", nullable = false)
     private Integer points;
 
+
+    public Long getId() {
+        return id;
+    }
 }

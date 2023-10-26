@@ -4,7 +4,7 @@ plugins {
     id("io.micronaut.aot") version "4.0.3"
 }
 
-version = "0.1"
+version = "0.0.1"
 group = "gcg.akula"
 
 repositories {
@@ -24,6 +24,10 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
     runtimeOnly("org.yaml:snakeyaml")
     testImplementation("io.micronaut:micronaut-http-client")
+
+    implementation 'io.micronaut.micrometer:micronaut-micrometer-core'
+    implementation "io.micronaut:micronaut-management"
+    implementation "io.micronaut.micrometer:micronaut-micrometer-registry-prometheus"
 }
 
 

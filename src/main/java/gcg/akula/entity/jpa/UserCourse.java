@@ -25,4 +25,8 @@ public class UserCourse {
     @JoinColumn(name = "cid", nullable = false)
     private Course cid;
 
+
+    public Long getId() {
+        return id;
+    }
 }

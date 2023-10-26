@@ -32,4 +32,8 @@ public class Question {
     @JoinColumn(name = "tid", nullable = false)
     private Test tid;
 
+
+    public Long getId() {
+        return id;
+    }
 }

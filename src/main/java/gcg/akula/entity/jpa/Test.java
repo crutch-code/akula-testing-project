@@ -28,4 +28,8 @@ public class Test {
     @JoinColumn(name = "lid", nullable = false)
     private Lesson lid;
 
+
+    public Long getId() {
+        return id;
+    }
 }

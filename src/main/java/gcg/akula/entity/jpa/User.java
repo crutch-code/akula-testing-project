@@ -41,4 +41,8 @@ public class User {
     @JoinColumn(name = "boss")
     private User boss;
 
+
+    public Long getId() {
+        return id;
+    }
 }

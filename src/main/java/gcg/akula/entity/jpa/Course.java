@@ -19,4 +19,8 @@ public class Course {
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;
 
+
+    public Long getId() {
+        return id;
+    }
 }

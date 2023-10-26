@@ -28,4 +28,7 @@ public class Answer {
     @JoinColumn(name = "qid", nullable = false)
     private Question qid;
 
+    public Long getId() {
+        return id;
+    }
 }

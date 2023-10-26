@@ -23,4 +23,7 @@ public class Option {
     @Column(name = "is_left", nullable = false)
     private Boolean isLeft = false;
 
+    public Long getId() {
+        return id;
+    }
 }

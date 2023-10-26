@@ -38,4 +38,8 @@ public class News {
     @Column(name = "publish_date", columnDefinition = "timestamp(6) not null")
     private Object publishDate;
 */
+
+    public Long getId() {
+        return id;
+    }
 }
