@@ -32,12 +32,12 @@ public class News {
     @JoinColumn(name = "author", nullable = false)
     private User author;
 
-/*
-    TODO [JPA Buddy] create field to map the 'publish_date' column
-     Available actions: Define target Java type | Uncomment as is | Remove column mapping
+
+
+
     @Column(name = "publish_date", columnDefinition = "timestamp(6) not null")
     private Object publishDate;
-*/
+
 
     public Long getId() {
         return id;

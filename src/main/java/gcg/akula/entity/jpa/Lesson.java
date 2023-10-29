@@ -1,5 +1,6 @@
 package gcg.akula.entity.jpa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -27,13 +28,14 @@ public class Lesson {
     private String description;
 
     @NotNull
-    @Column(name = "index", nullable = false)
+    @Column(name = "\"index\"", nullable = false)
     private Integer index;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "cid", nullable = false)
-    private Course cid;
+    @JsonIgnore
+    private Course course;
 
 
     public Long getId() {

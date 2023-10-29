@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -19,8 +22,8 @@ public class Course {
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;
 
+    @OrderBy("\"index\" ASC")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
+    private List<Lesson> lessons = new ArrayList<>();
 
-    public Long getId() {
-        return id;
-    }
 }
