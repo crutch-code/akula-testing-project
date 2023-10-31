@@ -1,6 +1,6 @@
-package gcg.akula.response.exceptions;
+package gcg.akula.entity.response.exceptions;
 
-import gcg.akula.response.ApplicationResponse;
+import gcg.akula.entity.response.ApplicationResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

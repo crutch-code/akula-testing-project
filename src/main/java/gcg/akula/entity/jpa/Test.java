@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "test")
 public class Test {
@@ -28,8 +26,46 @@ public class Test {
     @JoinColumn(name = "lid", nullable = false)
     private Lesson lid;
 
+    public Test(Long id, @NotNull String theme, @NotNull Integer minBall, @NotNull Lesson lid) {
+        this.id = id;
+        this.theme = theme;
+        this.minBall = minBall;
+        this.lid = lid;
+    }
+
+    public Test() {
+
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public Integer getMinBall() {
+        return minBall;
+    }
+
+    public void setMinBall(Integer minBall) {
+        this.minBall = minBall;
+    }
+
+    public Lesson getLid() {
+        return lid;
+    }
+
+    public void setLid(Lesson lid) {
+        this.lid = lid;
     }
 }

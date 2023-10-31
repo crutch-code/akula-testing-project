@@ -25,6 +25,15 @@ public class UserCourse {
     @JoinColumn(name = "cid", nullable = false)
     private Course cid;
 
+    public UserCourse(Long id, @NotNull User uid, @NotNull Course cid) {
+        this.id = id;
+        this.uid = uid;
+        this.cid = cid;
+    }
+
+    public UserCourse() {
+
+    }
 
     public Long getId() {
         return id;

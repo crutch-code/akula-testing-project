@@ -7,12 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
-@Getter
-@Setter
 @Comment("Пользователь")
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "\"user\"")
 public class User {
     @Id
@@ -41,8 +37,63 @@ public class User {
     @JoinColumn(name = "boss")
     private User boss;
 
+    public User() {
+    }
+
+    public User(Long id, String id1c, String fio, String login, String password, User boss) {
+        this.id = id;
+        this.id1c = id1c;
+        this.fio = fio;
+        this.login = login;
+        this.password = password;
+        this.boss = boss;
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getId1c() {
+        return id1c;
+    }
+
+    public void setId1c(String id1c) {
+        this.id1c = id1c;
+    }
+
+    public String getFio() {
+        return fio;
+    }
+
+    public void setFio(String fio) {
+        this.fio = fio;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public User getBoss() {
+        return boss;
+    }
+
+    public void setBoss(User boss) {
+        this.boss = boss;
     }
 }

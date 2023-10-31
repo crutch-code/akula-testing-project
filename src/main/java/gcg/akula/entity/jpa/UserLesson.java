@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "user_lesson")
 public class UserLesson {
@@ -29,8 +27,46 @@ public class UserLesson {
     @Column(name = "status", nullable = false)
     private Integer status;
 
+    public UserLesson(Long id, @NotNull User uid, @NotNull Lesson lid, @NotNull Integer status) {
+        this.id = id;
+        this.uid = uid;
+        this.lid = lid;
+        this.status = status;
+    }
+
+    public UserLesson() {
+
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUid() {
+        return uid;
+    }
+
+    public void setUid(User uid) {
+        this.uid = uid;
+    }
+
+    public Lesson getLid() {
+        return lid;
+    }
+
+    public void setLid(Lesson lid) {
+        this.lid = lid;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

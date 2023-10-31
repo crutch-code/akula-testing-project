@@ -48,6 +48,7 @@ endpoints:
     url:
       enabled: true
 
+
 datasources:
   default:
     url: ${JDBC_URL:`jdbc:postgresql://localhost:5432/akula`}?ApplicationName=${micronaut.application.name}
@@ -73,3 +74,8 @@ jpa:
         jdbc:
           batch_size: 100
         order_inserts: true
+jackson:
+  module-scan: true
+  bean-introspection-module: true
+  json-view:
+    enabled: true
