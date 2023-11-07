@@ -1,12 +1,10 @@
 package gcg.akula.entity.jpa;
 
+import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
+@Serdeable
 @Comment("Пользователь")
 @Entity
 @Table(name = "\"user\"")

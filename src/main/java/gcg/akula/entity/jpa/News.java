@@ -1,15 +1,12 @@
 package gcg.akula.entity.jpa;
 
+import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Serdeable
 @Entity
 @Table(name = "news")
 public class News {
@@ -20,12 +17,10 @@ public class News {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Size(max = 255)
     @NotNull
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Size(max = 255)
     @NotNull
     @Column(name = "content", nullable = false)
     private String content;

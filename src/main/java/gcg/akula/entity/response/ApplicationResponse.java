@@ -1,53 +1,53 @@
 package gcg.akula.entity.response;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.serde.annotation.Serdeable;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ApplicationResponse {
+import java.util.Optional;
 
+@Serdeable
+public class ApplicationResponse<T> {
+    private HttpStatus status;
+    private T body;
+    private Throwable reason;
 
-    protected Integer httpCode;
-
-    protected String message;
-
-    protected String endpoint;
-
-    public ApplicationResponse() {
+    public ApplicationResponse(HttpStatus status, T body) {
+        this.status = status;
+        this.body = body;
     }
 
-    public ApplicationResponse(Integer httpCode, String message, String endpoint) {
-        this.httpCode = httpCode;
-        this.message = message;
-        this.endpoint = endpoint;
+    public ApplicationResponse(HttpStatus status, Throwable reason) {
+        this.status = status;
+        this.reason = reason;
     }
 
-    public Integer getHttpCode() {
-        return httpCode;
+    public HttpStatus getStatus() {
+        return status;
     }
 
-    public void setHttpCode(Integer httpCode) {
-        this.httpCode = httpCode;
+    public String getReason() {
+        if(reason == null) {
+            return null;
+        }
+        return ExceptionUtils.getStackTrace(reason);
     }
 
-    public String getMessage() {
-        return message;
+    public @NonNull Optional<T> getBody() {
+        return Optional.ofNullable(body);
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+
+    public static <B> ApplicationResponse<B> ok(B body) {
+        return new ApplicationResponse(HttpStatus.OK, body);
     }
 
-    public String getEndpoint() {
-        return endpoint;
+    public static ApplicationResponse<String> fail(Throwable reason) {
+        return new ApplicationResponse(HttpStatus.BAD_REQUEST, reason);
     }
 
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
+    public static ApplicationResponse<String> fail(HttpStatus status, Throwable reason) {
+        return new ApplicationResponse(status, reason);
     }
 }

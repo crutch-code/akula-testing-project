@@ -24,6 +24,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
     runtimeOnly("org.yaml:snakeyaml")
     testImplementation("io.micronaut:micronaut-http-client")
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
 
     implementation 'io.micronaut.micrometer:micronaut-micrometer-core'
     implementation "io.micronaut:micronaut-management"

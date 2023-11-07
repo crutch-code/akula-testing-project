@@ -1,11 +1,13 @@
 micronaut:
   application:
     name: 'akula'
-    default-page-size: 15
-  executors:
-    io:
-      type: fixed
-      nThreads: 75
+  data:
+    pageable:
+      default-page-size: 10
+  #executors:
+  #  io:
+  #    type: fixed
+  #    nThreads: 10
   server:
     port: ${PORT:8080}
     idle-timeout: 10m
@@ -47,7 +49,6 @@ endpoints:
     details-visible: ANONYMOUS
     url:
       enabled: true
-
 
 datasources:
   default:
