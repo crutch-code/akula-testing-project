@@ -56,8 +56,7 @@ export class NavBar extends Component<any, any> {
                                             <div className="col-lg-6 inside-bg d-none d-lg-block">
                                                 <div className="justify-content-center bg-primary text-white">
                                                     <div className="px-6 pb-5 pt-3">
-                                                        <img src="./assets/img/megamenu-image.jpg"
-                                                             alt="Pixel Components"/>
+                                                        img_here
                                                     </div>
                                                     <div className="z-2 pb-4 text-center">
                                                         <a href="./html/components/all.html"

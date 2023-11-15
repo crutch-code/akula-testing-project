@@ -9,7 +9,11 @@ export class News extends Component<any, any> {
             id: props.newsId,
             image: props.image,
             date: props.date,
-            author: {id: props.authorId, name: props.authorName, photo: props.authorAvatar},
+            author: {
+                id: props.authorId,
+                name: props.authorName.split(' ')[1].substring(0, 1) + '. ' + props.authorName.split(' ')[0],
+                photo: props.authorAvatar
+            },
             title: props.title,
             content: props.children
         };

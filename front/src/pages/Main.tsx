@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {News} from '../components/News'
 import {NewsType} from '../types/NewsType'
+import {REST} from "../api/REST";
 
 export default class Main extends Component<any, any> {
     state = {
@@ -8,15 +9,9 @@ export default class Main extends Component<any, any> {
     }
 
     componentDidMount() {
-        fetch("http://localhost:8080/api/news", {method: "GET"})
-            .then((response) => response.json())
-            .then((data: any) => {
-                this.setState({
-                    news: data.body.content
-                });
-            })
-            .catch((error) => console.error(error));
-
+        REST.getNews().then(n => {
+            this.setState({news: n});
+        });
     }
 
     render() {
@@ -26,18 +21,18 @@ export default class Main extends Component<any, any> {
                 <div className={'section'}>
                     <div className="container">
                         <div className="row mb-5">
-                            {news.map((news: NewsType) =>
-                                <News key={news.id} newsId={news.id} title={news.title}
+                            {news.map((n: NewsType) =>
+                                <News key={n.id} newsId={n.id} title={n.title}
                                       image='https://media.cntraveller.com/photos/611bf0b8f6bd8f17556db5e4/master/pass/gettyimages-1146431497.jpg'
-                                      authorId={news.author.id}
-                                      authorName={news.author.fio}
+                                      authorId={n.author.id}
+                                      authorName={n.author.fio}
                                       authorAvatar='https://www.vhv.rs/dpng/d/551-5511364_circle-profile-man-hd-png-download.png'
-                                      date={new Date(Date.parse(news.publishDate)).toLocaleString("ru-RU", {
+                                      date={new Date(Date.parse(n.publishDate)).toLocaleString("ru-RU", {
                                           day: '2-digit',
                                           month: 'long',
                                           year: 'numeric'
                                       })}>
-                                    {news.content}
+                                    {n.content}
                                 </News>
                             )}
                         </div>
