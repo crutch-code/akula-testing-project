@@ -1,17 +1,28 @@
 package gcg.akula.entity.response;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.serde.annotation.Serdeable;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.util.Optional;
 
 @Serdeable
+@JsonPropertyOrder(
+        {"status", "body", "reason"}
+)
 public class ApplicationResponse<T> {
     private HttpStatus status;
     private T body;
     private Throwable reason;
+
+    public ApplicationResponse(HttpStatus status, T body, Throwable reason) {
+        this.status = status;
+        this.body = body;
+        this.reason = reason;
+    }
 
     public ApplicationResponse(HttpStatus status, T body) {
         this.status = status;
@@ -49,5 +60,9 @@ public class ApplicationResponse<T> {
 
     public static ApplicationResponse<String> fail(HttpStatus status, Throwable reason) {
         return new ApplicationResponse(status, reason);
+    }
+
+    public static ApplicationResponse<String> fail(HttpStatus status, String body,  Throwable reason) {
+        return new ApplicationResponse(status,body, reason);
     }
 }

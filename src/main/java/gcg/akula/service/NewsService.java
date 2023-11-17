@@ -1,11 +1,15 @@
 package gcg.akula.service;
 
 import gcg.akula.entity.dto.NewsDto;
+import gcg.akula.entity.jpa.News;
 import gcg.akula.repository.NewsRepository;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Singleton
 public class NewsService {
@@ -19,6 +23,19 @@ public class NewsService {
     }
 
     public NewsDto publish(NewsDto news) {
-        return new NewsDto(newsRepository.save(news.toEntity()));
+        news.setPublishDate(LocalDateTime.now(ZoneId.systemDefault()));
+        return new NewsDto(
+                newsRepository.save(news.toEntity())
+        );
+    }
+
+    public void delete(Long id){
+        newsRepository.deleteById(id);
+    }
+
+    public NewsDto update(NewsDto update){
+        return new NewsDto(
+                newsRepository.update(update.toEntity())
+        );
     }
 }

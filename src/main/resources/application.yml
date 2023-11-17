@@ -4,14 +4,15 @@ micronaut:
   data:
     pageable:
       default-page-size: 10
-  #executors:
-  #  io:
-  #    type: fixed
-  #    nThreads: 10
+      max-page-size: 50
+#  executors:
+#    io:
+#      type: fixed
+#      nThreads: 10
   server:
     port: ${PORT:8080}
     idle-timeout: 10m
-    max-request-size: '100'
+    max-request-size: '100Mb'
     multipart:
       enabled: true
       max-file-size: '100'

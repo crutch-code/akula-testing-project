@@ -1,5 +1,6 @@
 package gcg.akula.entity.jpa;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Comment;

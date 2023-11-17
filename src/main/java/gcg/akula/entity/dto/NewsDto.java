@@ -1,5 +1,8 @@
 package gcg.akula.entity.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gcg.akula.entity.jpa.News;
 import gcg.akula.entity.jpa.User;
 import io.micronaut.serde.annotation.Serdeable;
@@ -7,16 +10,26 @@ import io.micronaut.serde.annotation.Serdeable;
 import java.time.LocalDateTime;
 
 @Serdeable
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class NewsDto implements DTO<News> {
     private Long id;
     private String title;
     private String content;
     private User author;
+    @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
     private LocalDateTime publishDate;
 
     @Override
     public News toEntity() {
         return new News(id, title, content, author, publishDate);
+    }
+
+    public NewsDto(Long id, String title, String content, User author, LocalDateTime publishDate) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.publishDate = publishDate;
     }
 
     public NewsDto(News news) {

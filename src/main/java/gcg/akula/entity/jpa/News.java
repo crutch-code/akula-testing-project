@@ -1,15 +1,17 @@
 package gcg.akula.entity.jpa;
 
+import gcg.akula.entity.dto.NewsDto;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Serdeable
 @Entity
 @Table(name = "news")
-public class News {
+public class News implements Updatable<News, NewsDto> {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "news_id_seq")
@@ -85,5 +87,16 @@ public class News {
 
     public void setPublishDate(LocalDateTime publishDate) {
         this.publishDate = publishDate;
+    }
+
+    @Override
+    public News update(NewsDto dto) {
+        return new News(
+                dto.getId(),
+                dto.getTitle() == null ? this.title : dto.getTitle(),
+                dto.getContent() == null ? this.content : dto.getContent(),
+                dto.getAuthor().equals(this.author)? this.author : dto.getAuthor(),
+                this.getPublishDate()
+        );
     }
 }
