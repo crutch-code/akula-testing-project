@@ -3,7 +3,7 @@ plugins {
     id("io.micronaut.application") version "4.0.3"
 }
 
-version = "0.0.4"
+version = "0.0.12"
 group = "gcg.akula"
 
 repositories {
@@ -17,7 +17,7 @@ dependencies {
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     implementation("io.micronaut.sql:micronaut-hibernate-jpa")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
-    implementation("io.micronaut.views:micronaut-views-handlebars")
+    implementation("io.micronaut.views:micronaut-views-thymeleaf")
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.postgresql:postgresql")

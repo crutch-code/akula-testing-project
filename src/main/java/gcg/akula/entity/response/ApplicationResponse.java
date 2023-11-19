@@ -3,7 +3,6 @@ package gcg.akula.entity.response;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpStatus;
-import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.serde.annotation.Serdeable;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -54,15 +53,15 @@ public class ApplicationResponse<T> {
         return new ApplicationResponse(HttpStatus.OK, body);
     }
 
-    public static ApplicationResponse<String> fail(Throwable reason) {
+    public static <B> ApplicationResponse<B> fail(Throwable reason) {
         return new ApplicationResponse(HttpStatus.BAD_REQUEST, reason);
     }
 
-    public static ApplicationResponse<String> fail(HttpStatus status, Throwable reason) {
+    public static <B> ApplicationResponse<B> fail(HttpStatus status, Throwable reason) {
         return new ApplicationResponse(status, reason);
     }
 
-    public static ApplicationResponse<String> fail(HttpStatus status, String body,  Throwable reason) {
+    public static <B> ApplicationResponse<B> fail(HttpStatus status, String body,  Throwable reason) {
         return new ApplicationResponse(status,body, reason);
     }
 }

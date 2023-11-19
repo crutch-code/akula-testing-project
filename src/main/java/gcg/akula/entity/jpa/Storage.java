@@ -18,8 +18,9 @@ public class Storage {
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;
 
+    @NotNull
     @Column(name = "data", nullable = false)
-    private byte @NotNull [] data;
+    private byte[] data;
 
     @Column(name = "file_path", length = Integer.MAX_VALUE)
     private String filePath;
@@ -27,11 +28,10 @@ public class Storage {
     public Storage() {
     }
 
-    public Storage(Long id, @NotNull String name, byte @NotNull [] data, String filePath) {
+    public Storage(Long id, @NotNull String name, @NotNull byte[] data) {
         this.id = id;
         this.name = name;
         this.data = data;
-        this.filePath = filePath;
     }
 
     public Long getId() {

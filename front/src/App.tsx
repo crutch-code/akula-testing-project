@@ -1,18 +1,23 @@
 import React from 'react';
 import './styles/bootstrap.css';
-import Main from './pages/Main'
+import MainPage from './pages/MainPage'
 import {NavBar} from './components/NavBar'
+import {BrowserRouter, Route, Router, Routes} from "react-router-dom";
+import {NewsPage} from "./pages/NewsPage";
 
-function App() {
+export default function App() {
     return (
         <div className="App">
-            <NavBar/>
-            <Main/>
-            <footer>
+            <BrowserRouter>
+                <NavBar/>
+                <Routes>
+                    <Route path="/" element={<MainPage/>}></Route>
+                    <Route path="/news/:id" element={<NewsPage/>}></Route>
+                </Routes>
+                <footer>
 
-            </footer>
+                </footer>
+            </BrowserRouter>
         </div>
     );
 }
-
-export default App;

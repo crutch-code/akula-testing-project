@@ -1,8 +1,8 @@
 package gcg.akula.entity.jpa;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.Comment;
 
 @Serdeable
@@ -36,16 +36,22 @@ public class User {
     @JoinColumn(name = "boss")
     private User boss;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "photo", nullable = false)
+    private Storage photo;
+
     public User() {
     }
 
-    public User(Long id, String id1c, String fio, String login, String password, User boss) {
+    public User(Long id, String id1c, String fio, String login, String password, User boss, Storage photo) {
         this.id = id;
         this.id1c = id1c;
         this.fio = fio;
         this.login = login;
         this.password = password;
         this.boss = boss;
+        this.photo = photo;
     }
 
     public Long getId() {
@@ -94,5 +100,13 @@ public class User {
 
     public void setBoss(User boss) {
         this.boss = boss;
+    }
+
+    public Storage getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Storage photo) {
+        this.photo = photo;
     }
 }

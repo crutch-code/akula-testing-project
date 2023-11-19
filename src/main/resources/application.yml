@@ -12,11 +12,11 @@ micronaut:
   server:
     port: ${PORT:8080}
     idle-timeout: 10m
-    max-request-size: '100Mb'
+    max-request-size: 52428800 #50MB
     multipart:
       enabled: true
-      max-file-size: '100'
-      threshold: '100'
+      max-file-size: 52428800 #50MB
+      #threshold: '100'
       mixed: true
     cors:
       enabled: true
@@ -32,6 +32,8 @@ micronaut:
         enabled: true
         step: PT1M
         descriptions: true
+  views:
+    folder: web
 endpoints:
   all:
     port: 8081

@@ -18,4 +18,15 @@ export class REST {
             .then((data: NewsType[]) => { return data; });
             //.catch((error) => console.warn(error));
     }
+
+    public static getNewsById(id: any) {
+        return fetch("/api/news/" + id, {method: "GET"})
+            .then((response) => response.json())
+            .then((data: any) => {
+                if(data.status === 'OK')
+                    return data.body;
+                throw data;
+            })
+            .catch((error) => console.error(error));
+    }
 }

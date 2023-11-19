@@ -1,23 +1,28 @@
 package gcg.akula.controller;
 
-import gcg.akula.entity.jpa.Course;
-import gcg.akula.repository.CourseRepository;
+import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import jakarta.inject.Inject;
+import io.micronaut.http.annotation.Error;
+import io.micronaut.views.View;
 
-import java.util.Optional;
-
-@Controller("/test")
+@Controller
 public class TemporalController {
 
-    @Inject
+    /*@Inject
     CourseRepository courseRepository;
 
     @Get("/")
     public HttpResponse get() {
         Optional<Course> x = courseRepository.findById(1L);
         return HttpResponse.ok(x.orElse(null));
-    }
+    }*/
+
+    //TODO: front
+    /*@View("index")
+    @Error(status = HttpStatus.NOT_FOUND, global = true)
+    public HttpResponse getAll(HttpRequest request) {
+        return HttpResponse.ok();
+    }*/
 }

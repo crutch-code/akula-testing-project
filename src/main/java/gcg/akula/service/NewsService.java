@@ -2,7 +2,6 @@ package gcg.akula.service;
 
 import gcg.akula.entity.dto.NewsDto;
 import gcg.akula.repository.NewsRepository;
-import io.micronaut.context.annotation.Value;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import jakarta.inject.Inject;
@@ -22,6 +21,12 @@ public class NewsService {
     public Page<NewsDto> getNews(Pageable pageable) {
         return newsRepository
                 .findAll(pageable)
+                .map(NewsDto::new);
+    }
+
+    public Optional<NewsDto> getNewsById(long id) {
+        return newsRepository
+                .findById(id)
                 .map(NewsDto::new);
     }
 

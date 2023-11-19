@@ -4,40 +4,40 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gcg.akula.entity.jpa.News;
-import gcg.akula.entity.jpa.User;
 import io.micronaut.serde.annotation.Serdeable;
 
 import java.time.LocalDateTime;
 
 @Serdeable
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class NewsDto implements DTO<News> {
     private Long id;
     private String title;
     private String content;
-    private User author;
-    @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
+    private UserDto author;
     private LocalDateTime publishDate;
+    private StorageDto photo;
 
     @Override
     public News toEntity() {
-        return new News(id, title, content, author, publishDate);
+        return new News(id, title, content, author.toEntity(), publishDate, photo.toEntity());
     }
 
-    public NewsDto(Long id, String title, String content, User author, LocalDateTime publishDate) {
+    public NewsDto(Long id, String title, String content, UserDto author, LocalDateTime publishDate, StorageDto photo) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.author = author;
         this.publishDate = publishDate;
+        this.photo = photo;
     }
 
     public NewsDto(News news) {
         id = news.getId();
         title = news.getTitle();
         content = news.getContent();
-        author = news.getAuthor();
+        author = new UserDto(news.getAuthor());
         publishDate = news.getPublishDate();
+        photo = new StorageDto(news.getPhoto(), true);
     }
 
 
@@ -65,11 +65,11 @@ public class NewsDto implements DTO<News> {
         this.content = content;
     }
 
-    public User getAuthor() {
+    public UserDto getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(UserDto author) {
         this.author = author;
     }
 
@@ -79,5 +79,13 @@ public class NewsDto implements DTO<News> {
 
     public void setPublishDate(LocalDateTime publishDate) {
         this.publishDate = publishDate;
+    }
+
+    public StorageDto getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(StorageDto photo) {
+        this.photo = photo;
     }
 }

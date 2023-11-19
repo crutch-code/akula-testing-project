@@ -1,12 +1,10 @@
 package gcg.akula.entity.jpa;
 
-import gcg.akula.entity.dto.NewsDto;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 @Serdeable
 @Entity
@@ -32,17 +30,22 @@ public class News {
     @JoinColumn(name = "author", nullable = false)
     private User author;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "photo", nullable = false)
+    private Storage photo;
 
     @Column(name = "publish_date", columnDefinition = "timestamp(6) default now()")
     private LocalDateTime publishDate;
 
 
-    public News(@NotNull Long id, @NotNull String title, @NotNull String content, @NotNull User author, LocalDateTime publishDate) {
+    public News(@NotNull Long id, @NotNull String title, @NotNull String content, @NotNull User author, LocalDateTime publishDate, Storage photo) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.author = author;
         this.publishDate = publishDate;
+        this.photo = photo;
     }
 
     public News() {
@@ -89,4 +92,11 @@ public class News {
         this.publishDate = publishDate;
     }
 
+    public Storage getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Storage photo) {
+        this.photo = photo;
+    }
 }

@@ -24,7 +24,11 @@ public abstract class NewsRepository implements CrudRepository<News, Long> {
                 .getResultList()
                 .get(0);
         List<News> news = entityManager
-                .createQuery("select distinct N from News N left join fetch N.author order by N.publishDate desc", News.class)
+                .createQuery("select distinct N from News N " +
+                        "left join fetch N.author A " +
+                        "left join fetch N.photo " +
+                        "left join fetch A.photo " +
+                        "order by N.publishDate desc", News.class)
                 .setMaxResults(pageable.getSize())
                 .setFirstResult((int) pageable.getOffset())
                 .getResultList();
