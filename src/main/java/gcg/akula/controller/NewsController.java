@@ -22,27 +22,17 @@ public class NewsController {
 
     private static final Logger logger = LoggerFactory.getLogger(NewsController.class);
 
-    @Value("${micronaut.data.pageable.default-page-size}")
-    public Integer DEFAULT_PAGE_SIZE;
-
-    @Value("${micronaut.data.pageable.max-page-size}")
-    public Integer MAX_PAGE_SIZE;
-
     @Inject
     NewsService newsService;
 
     @Get("/")
     public ApplicationResponse<Page<NewsDto>> getNews(
-            @QueryValue Optional<Integer> page,
-            @QueryValue Optional<Integer> size
-            ) {
+            Pageable pageable
+    ){
         try{
             return ApplicationResponse.ok(
                     newsService.getNews(
-                            Pageable.from(
-                                    page.orElse(0),
-                                    size.orElse(DEFAULT_PAGE_SIZE)
-                            )
+                            pageable
                     )
             );
         }catch (Exception ex){
@@ -52,7 +42,7 @@ public class NewsController {
     }
 
     @Post(value = "/", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    public ApplicationResponse publishNews(@Body NewsDto body) {
+    public ApplicationResponse<NewsDto> publishNews(@Body NewsDto body) {
         try {
             return ApplicationResponse.ok(
                     newsService.publish(body)
@@ -64,16 +54,16 @@ public class NewsController {
         }
     }
 
-    @Delete(value = "/")
-    public ApplicationResponse deleteNews(
-            @QueryValue Optional<Long> id
+    @Delete(value = "/{id}")
+    public ApplicationResponse<String> deleteNews(
+             long id
     ){
-        newsService.delete(id.orElseThrow(() -> new RuntimeException("Не передан идентификатор")));
-        return ApplicationResponse.ok("Новость с id: " + id.get() + "- удалена");
+        newsService.delete(id);
+        return ApplicationResponse.ok("Новость удалена");
     }
 
     @Patch(value = "/", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    public ApplicationResponse updateNews(
+    public ApplicationResponse<NewsDto> updateNews(
             @Body NewsDto update
     ){
         try {

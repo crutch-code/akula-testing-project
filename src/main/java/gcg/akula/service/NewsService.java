@@ -1,8 +1,8 @@
 package gcg.akula.service;
 
 import gcg.akula.entity.dto.NewsDto;
-import gcg.akula.entity.jpa.News;
 import gcg.akula.repository.NewsRepository;
+import io.micronaut.context.annotation.Value;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import jakarta.inject.Inject;
@@ -10,11 +10,14 @@ import jakarta.inject.Singleton;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Optional;
 
 @Singleton
 public class NewsService {
+
     @Inject
     NewsRepository newsRepository;
+
 
     public Page<NewsDto> getNews(Pageable pageable) {
         return newsRepository

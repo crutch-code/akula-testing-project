@@ -11,7 +11,7 @@ import java.time.ZoneId;
 @Serdeable
 @Entity
 @Table(name = "news")
-public class News implements Updatable<News, NewsDto> {
+public class News {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "news_id_seq")
@@ -89,14 +89,4 @@ public class News implements Updatable<News, NewsDto> {
         this.publishDate = publishDate;
     }
 
-    @Override
-    public News update(NewsDto dto) {
-        return new News(
-                dto.getId(),
-                dto.getTitle() == null ? this.title : dto.getTitle(),
-                dto.getContent() == null ? this.content : dto.getContent(),
-                dto.getAuthor().equals(this.author)? this.author : dto.getAuthor(),
-                this.getPublishDate()
-        );
-    }
 }
