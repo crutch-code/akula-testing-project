@@ -14,7 +14,7 @@ spec:
     - host: {{ coalesce ((.Values.global).ingress).dns (.Values.ingress).dns }}
       http:
         paths:
-          - path: /(.*)
+          - path: /api/(.*)
             pathType: Prefix
             backend:
               service:

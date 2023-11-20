@@ -32,4 +32,4 @@ service:
 ingress:
   dns: akula.gcg.name
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/rewrite-target: /api/$1
