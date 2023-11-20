@@ -38,7 +38,7 @@ public class ApplicationResponse<T> {
     }
 
     public String getReason() {
-        if(reason == null) {
+        if (reason == null) {
             return null;
         }
         return ExceptionUtils.getStackTrace(reason);
