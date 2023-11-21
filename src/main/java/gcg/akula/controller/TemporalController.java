@@ -18,11 +18,4 @@ public class TemporalController {
         Optional<Course> x = courseRepository.findById(1L);
         return HttpResponse.ok(x.orElse(null));
     }*/
-
-    //TODO: front
-    /*@View("index")
-    @Error(status = HttpStatus.NOT_FOUND, global = true)
-    public HttpResponse getAll(HttpRequest request) {
-        return HttpResponse.ok();
-    }*/
 }

@@ -20,11 +20,6 @@ micronaut:
       mixed: true
     cors:
       enabled: true
-  router:
-    static-resources:
-      static:
-        paths: classpath:web
-        mapping: /**
   metrics:
     enabled: true
     export:

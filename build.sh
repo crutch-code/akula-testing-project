@@ -3,14 +3,6 @@
 export APP=$(cat settings.gradle | grep -m 1 '^rootProject.name' | awk -F '"' '$0=$2')
 export VERSION=$(cat build.gradle | grep -m 1 '^version' | awk -F '"' '$0=$2')
 
-cd front
-npm install --package-lock || exit 1
-npm ci || exit 1
-npm run build || exit 1
-rm -rf ../src/main/resources/web/*
-cp -r build/* ../src/main/resources/web/
-cd ..
-
 ./gradlew clean build || exit 1
 
 helm lint chart/ || exit 1
