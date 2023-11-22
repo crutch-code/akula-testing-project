@@ -15,11 +15,12 @@ public class UserDto implements DTO<User> {
     @JsonIgnore
     private String password;
     private UserDto boss;
+    private DepartmentDto department;
     private StorageDto photo;
 
     @Override
     public User toEntity() {
-        return new User(id, id1c, fio, login, password, boss == null ? null : boss.toEntity(), photo.toEntity());
+        return new User(id, id1c, fio, login, password, boss == null ? null : boss.toEntity(), department.toEntity(), photo.toEntity());
     }
 
     public UserDto(User user) {
@@ -28,9 +29,10 @@ public class UserDto implements DTO<User> {
         fio = user.getFio();
         login = user.getLogin();
         password = user.getPassword();
-        if(user.getBoss() != null) {
+        if (user.getBoss() != null) {
             boss = new UserDto(user.getBoss());
         }
+        department = new DepartmentDto(user.getDepartment());
         photo = new StorageDto(user.getPhoto(), true);
     }
 
@@ -77,6 +79,14 @@ public class UserDto implements DTO<User> {
 
     public void setBoss(UserDto boss) {
         this.boss = boss;
+    }
+
+    public DepartmentDto getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DepartmentDto department) {
+        this.department = department;
     }
 
     public StorageDto getPhoto() {

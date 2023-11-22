@@ -61,7 +61,7 @@ public class ApplicationResponse<T> {
         return new ApplicationResponse(status, reason);
     }
 
-    public static <B> ApplicationResponse<B> fail(HttpStatus status, String body,  Throwable reason) {
-        return new ApplicationResponse(status,body, reason);
+    public static <B> ApplicationResponse<B> fail(HttpStatus status, String body, Throwable reason) {
+        return new ApplicationResponse(status, body, reason);
     }
 }

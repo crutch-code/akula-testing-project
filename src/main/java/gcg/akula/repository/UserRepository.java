@@ -17,8 +17,12 @@ public abstract class UserRepository implements CrudRepository<User, Long> {
 
     @ReadOnly
     public Optional<User> getMe() {
-        final long id = 1L;
-        List<User> user = entityManager.createQuery("select U from User U left join fetch U.boss B where U.id=(:id)", User.class)
+        final long id = 1L;//TODO: change
+        List<User> user = entityManager.createQuery("select U from User U " +
+                        "left join fetch U.boss B " +
+                        "left join fetch U.photo P " +
+                        "left join fetch U.department D " +
+                        "where U.id=(:id)", User.class)
                 .setParameter("id", id)
                 .setMaxResults(1)
                 .getResultList();

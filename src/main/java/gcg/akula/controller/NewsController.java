@@ -3,6 +3,7 @@ package gcg.akula.controller;
 import gcg.akula.entity.dto.NewsDto;
 import gcg.akula.entity.jpa.News;
 import gcg.akula.entity.response.ApplicationResponse;
+import gcg.akula.exception.NotFoundException;
 import gcg.akula.service.NewsService;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
@@ -10,7 +11,6 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 import jakarta.inject.Inject;
-import org.hibernate.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +66,7 @@ public class NewsController {
         Optional<NewsDto> news = newsService.getNewsById(id);
         return news
                 .map(ApplicationResponse::ok)
-                .orElseGet(() -> ApplicationResponse.fail(HttpStatus.NOT_FOUND, new ObjectNotFoundException(News.class.getName(), id)));
+                .orElseGet(() -> ApplicationResponse.fail(HttpStatus.NOT_FOUND, new NotFoundException(News.class.getName() + "[" + id + "]")));
     }
 
     @Put(value = "/", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)

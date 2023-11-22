@@ -36,6 +36,10 @@ public class User {
     @JoinColumn(name = "boss")
     private User boss;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "did", nullable = false)
+    private Department department;
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "photo", nullable = false)
@@ -44,13 +48,14 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String id1c, String fio, String login, String password, User boss, Storage photo) {
+    public User(Long id, String id1c, String fio, String login, String password, User boss, Department department, Storage photo) {
         this.id = id;
         this.id1c = id1c;
         this.fio = fio;
         this.login = login;
         this.password = password;
         this.boss = boss;
+        this.department = department;
         this.photo = photo;
     }
 
@@ -100,6 +105,14 @@ public class User {
 
     public void setBoss(User boss) {
         this.boss = boss;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public Storage getPhoto() {
