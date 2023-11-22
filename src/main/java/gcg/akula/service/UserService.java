@@ -13,8 +13,8 @@ public class UserService {
     @Inject
     UserRepository userRepository;
 
-    public UserDto getCurrent() {
-        return new UserDto(userRepository.findById(1L).get());
+    public Optional<UserDto> getCurrent() {
+        return userRepository.getMe().map(UserDto::new);
     }
 
     public Optional<UserDto> getById(long id) {

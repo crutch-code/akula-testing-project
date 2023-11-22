@@ -26,4 +26,13 @@ public class UserController {
         }
         return ApplicationResponse.fail(HttpStatus.NOT_FOUND, new NotFoundException(User.class.getName()));
     }
+
+    @Get("/me")
+    public ApplicationResponse<UserDto> getMe() {
+        Optional<UserDto> user = userService.getCurrent();
+        if(user.isPresent()) {
+            return ApplicationResponse.ok(user.get());
+        }
+        return ApplicationResponse.fail(HttpStatus.NOT_FOUND, new NotFoundException(User.class.getName()));//TODO: it's logout
+    }
 }
