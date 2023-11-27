@@ -25,12 +25,16 @@ public class Storage {
     @Column(name = "file_path", length = Integer.MAX_VALUE)
     private String filePath;
 
+    @Column(name = "type", length = Integer.MAX_VALUE)
+    private String type;
+
     public Storage() {
     }
 
-    public Storage(Long id, @NotNull String name, @NotNull byte[] data) {
+    public Storage(Long id, @NotNull String name, String type, @NotNull byte[] data) {
         this.id = id;
         this.name = name;
+        this.type = type;
         this.data = data;
     }
 
@@ -64,5 +68,13 @@ public class Storage {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

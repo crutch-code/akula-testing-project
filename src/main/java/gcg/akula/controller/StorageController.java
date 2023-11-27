@@ -32,8 +32,8 @@ public class StorageController {
     }
 
     @Post(value="/", consumes = MediaType.ALL)
-    public ApplicationResponse<StorageDto> postStorageFile(String name, byte[] data) {
-        return ApplicationResponse.ok(storageService.addFile(new StorageDto(null, name, data)));
+    public ApplicationResponse<StorageDto> postStorageFile(String name, String type, byte[] data) {
+        return ApplicationResponse.ok(storageService.addFile(new StorageDto(null, name, type, data)));
     }
 
 }
