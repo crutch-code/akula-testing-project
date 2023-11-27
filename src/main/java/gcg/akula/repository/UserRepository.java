@@ -4,6 +4,7 @@ import gcg.akula.entity.jpa.User;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.repository.CrudRepository;
 import io.micronaut.transaction.annotation.ReadOnly;
+import io.micronaut.transaction.annotation.Transactional;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
@@ -27,5 +28,13 @@ public abstract class UserRepository implements CrudRepository<User, Long> {
                 .setMaxResults(1)
                 .getResultList();
         return user.isEmpty() ? Optional.empty() : Optional.of(user.get(0));
+    }
+
+    @Deprecated
+    @Transactional
+    public int sync(String sql) {
+        return entityManager
+                .createNativeQuery(sql)
+                .executeUpdate();
     }
 }

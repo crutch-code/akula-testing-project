@@ -28,6 +28,7 @@ dependencies {
     implementation 'io.micronaut.micrometer:micronaut-micrometer-core'
     implementation "io.micronaut:micronaut-management"
     implementation "io.micronaut.micrometer:micronaut-micrometer-registry-prometheus"
+    implementation 'commons-codec:commons-codec:1.16.0'
 }
 
 
