@@ -11,7 +11,8 @@ import org.hibernate.annotations.Comment;
 @Table(name = "\"user\"")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
+    @SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -45,10 +46,19 @@ public class User {
     @JoinColumn(name = "photo", nullable = false)
     private Storage photo;
 
+    @NotNull
+    @Column(name = "disabled", nullable = false)
+    private Boolean disabled = false;
+
+
     public User() {
     }
 
-    public User(Long id, String id1c, String fio, String login, String password, User boss, Department department, Storage photo) {
+    public User(
+            Long id, String id1c, String fio,
+            String login, String password, User boss,
+            Department department, @NotNull Storage photo, @NotNull Boolean disabled
+    ) {
         this.id = id;
         this.id1c = id1c;
         this.fio = fio;
@@ -57,6 +67,7 @@ public class User {
         this.boss = boss;
         this.department = department;
         this.photo = photo;
+        this.disabled = disabled;
     }
 
     public Long getId() {
@@ -121,5 +132,13 @@ public class User {
 
     public void setPhoto(Storage photo) {
         this.photo = photo;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
 }

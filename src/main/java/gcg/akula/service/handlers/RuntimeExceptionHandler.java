@@ -1,4 +1,4 @@
-package gcg.akula.service.response.handlers;
+package gcg.akula.service.handlers;
 
 import gcg.akula.entity.response.ApplicationResponse;
 import io.micronaut.context.annotation.Primary;

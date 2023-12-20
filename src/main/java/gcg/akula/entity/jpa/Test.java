@@ -5,11 +5,15 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "test")
 public class Test {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "test_id_seq")
+    @SequenceGenerator(name = "test_id_seq", sequenceName = "test_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -21,16 +25,28 @@ public class Test {
     @Column(name = "min_ball", nullable = false)
     private Integer minBall;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "lid", nullable = false)
+    @OrderBy(value = "title ASC")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "tid")
+    private Set<Question> questions = new LinkedHashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lid")
     private Lesson lid;
 
-    public Test(Long id, @NotNull String theme, @NotNull Integer minBall, @NotNull Lesson lid) {
+    public Lesson getLid() {
+        return lid;
+    }
+
+    public void setLid(Lesson lid) {
+        this.lid = lid;
+    }
+
+
+    public Test(Long id, @NotNull String theme, @NotNull Integer minBall, Set<Question> questions) {
         this.id = id;
         this.theme = theme;
         this.minBall = minBall;
-        this.lid = lid;
+        this.questions = questions;
     }
 
     public Test() {
@@ -61,11 +77,11 @@ public class Test {
         this.minBall = minBall;
     }
 
-    public Lesson getLid() {
-        return lid;
+    public Set<Question> getQuestions() {
+        return questions;
     }
 
-    public void setLid(Lesson lid) {
-        this.lid = lid;
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
     }
 }

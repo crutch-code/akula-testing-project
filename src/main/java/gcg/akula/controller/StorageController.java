@@ -20,12 +20,11 @@ public class StorageController {
     @Inject
     StorageService storageService;
 
-    @Get(value = "/{name}")
+    @Get(value = "/{name}" , produces = MediaType.APPLICATION_OCTET_STREAM)
     public HttpResponse<byte[]> getStorageFile(String name) {
         Optional<StorageDto> file = storageService.getFileByName(name);
         if(file.isPresent()) {
             return HttpResponse.ok(file.get().getData())
-                    .header("Content-type", "application/octet-stream")
                     .header("Content-disposition", "attachment; filename=\"" + name + "\"; filename*=UTF-8''" + URLEncoder.encode(name, StandardCharsets.UTF_8).replace("+", "%20"));
         }
         return HttpResponse.notFound();

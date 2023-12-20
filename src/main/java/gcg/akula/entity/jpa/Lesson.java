@@ -5,44 +5,77 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.JoinFormula;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "lesson")
 public class Lesson {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lesson_id_seq")
+    @SequenceGenerator(name = "lesson_id_seq", sequenceName = "lesson_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @NotNull
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;
 
-    @NotNull
     @Column(name = "content", nullable = false, length = Integer.MAX_VALUE)
     private String content;
 
     @Column(name = "description", length = Integer.MAX_VALUE)
     private String description;
 
-    @NotNull
+
+
     @Column(name = "index", nullable = false)
     private Integer index;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "cid", nullable = false)
-    @JsonIgnore
-    private Course course;
+    @OneToMany(mappedBy = "lid")
+    private Set<Test> tests = new LinkedHashSet<>();
 
-    public Lesson(Long id, @NotNull String name, @NotNull String content, String description, @NotNull Integer index, @NotNull Course course) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cid")
+    private Course cid;
+
+    @Transient
+    private Integer status;
+
+
+    public Course getCid() {
+        return cid;
+    }
+
+    public void setCid(Course cid) {
+        this.cid = cid;
+    }
+
+
+    public Lesson(Long id, @NotNull String name, String content, String description, Integer index, Set<Test> tests) {
         this.id = id;
         this.name = name;
         this.content = content;
         this.description = description;
         this.index = index;
-        this.course = course;
+        this.tests = tests;
     }
+
+    public Lesson(
+            Long id, @NotNull String name, String content,
+            String description, Integer index, Set<Test> tests, Integer status
+    ) {
+        this.id = id;
+        this.name = name;
+        this.content = content;
+        this.description = description;
+        this.index = index;
+        this.tests = tests;
+    }
+
 
     public Lesson() {
 
@@ -88,11 +121,19 @@ public class Lesson {
         this.index = index;
     }
 
-    public Course getCourse() {
-        return course;
+    public Set<Test> getTests() {
+        return tests;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setTests(Set<Test> tests) {
+        this.tests = tests;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

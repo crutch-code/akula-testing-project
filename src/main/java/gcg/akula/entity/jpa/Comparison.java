@@ -5,13 +5,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "comparison")
 public class Comparison {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comparison_id_seq")
+    @SequenceGenerator(name = "comparison_id_seq", sequenceName = "comparison_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -25,19 +24,25 @@ public class Comparison {
     @JoinColumn(name = "rid", nullable = false)
     private Option rid;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "qid", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "qid")
     private Question qid;
+
+    public Question getQid() {
+        return qid;
+    }
+
+    public void setQid(Question qid) {
+        this.qid = qid;
+    }
 
     public Comparison() {
     }
 
-    public Comparison(Long id, @NotNull Option lid, @NotNull Option rid, @NotNull Question qid) {
+    public Comparison(Long id, @NotNull Option lid, @NotNull Option rid) {
         this.id = id;
         this.lid = lid;
         this.rid = rid;
-        this.qid = qid;
     }
 
     public Long getId() {
@@ -64,11 +69,4 @@ public class Comparison {
         this.rid = rid;
     }
 
-    public Question getQid() {
-        return qid;
-    }
-
-    public void setQid(Question qid) {
-        this.qid = qid;
-    }
 }

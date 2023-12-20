@@ -9,7 +9,8 @@ import lombok.Setter;
 @Table(name = "user_lesson")
 public class UserLesson {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_lesson_id_seq")
+    @SequenceGenerator(name = "user_lesson_id_seq", sequenceName = "user_lesson_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 

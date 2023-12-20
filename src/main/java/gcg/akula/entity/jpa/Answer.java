@@ -1,5 +1,6 @@
 package gcg.akula.entity.jpa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -9,7 +10,8 @@ import lombok.Setter;
 @Table(name = "answer")
 public class Answer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "answer_id_seq")
+    @SequenceGenerator(name = "answer_id_seq", sequenceName = "answer_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -19,6 +21,7 @@ public class Answer {
 
     @NotNull
     @Column(name = "correct", nullable = false)
+    @JsonIgnore
     private Boolean correct = false;
 
     @NotNull

@@ -6,13 +6,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "course")
 public class Course {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_id_seq")
+    @SequenceGenerator(name = "course_id_seq", sequenceName = "course_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -20,9 +23,11 @@ public class Course {
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;
 
+
     @OrderBy("index ASC")
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cid")
     private List<Lesson> lessons = new ArrayList<>();
+
 
     public Course() {
     }

@@ -1,15 +1,15 @@
 package gcg.akula.controller;
 
-
 import gcg.akula.entity.dto.CourseDto;
-import gcg.akula.entity.dto.lesson.LessonDto;
+import gcg.akula.entity.dto.NewsDto;
 import gcg.akula.entity.jpa.Course;
-import gcg.akula.entity.jpa.Lesson;
+import gcg.akula.entity.jpa.News;
 import gcg.akula.entity.response.ApplicationResponse;
 import gcg.akula.exception.NotFoundException;
 import gcg.akula.service.CourseService;
-import gcg.akula.service.LessonService;
 import gcg.akula.service.UserService;
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
@@ -19,29 +19,29 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
-@Controller("/api/lesson")
-public class LessonController{
+@Controller("/api/course")
+public class CourseController {
 
     private static final Logger logger = LoggerFactory.getLogger(CourseController.class);
 
     @Inject
-    LessonService lessonService;
+    CourseService courseService;
 
     @Inject
     UserService userService;
 
 
     @Get(value = "/{id}", produces = MediaType.APPLICATION_JSON)
-    public ApplicationResponse<LessonDto> getLessonsById(long id) {
+    public ApplicationResponse<CourseDto> getCourseById(long id) {
         try {
-            Optional<LessonDto> lessons = lessonService.getLessonsById(
+            Optional<CourseDto> news = courseService.getCourseFlat(
                     id,
                     userService.getCurrent().orElseThrow().getId()
             );
-            return lessons
+            return news
                     .map(ApplicationResponse::ok)
                     .orElseGet(() -> ApplicationResponse.fail(
-                            HttpStatus.NOT_FOUND, new NotFoundException(Lesson.class.getName() + "[" + id + "]"))
+                            HttpStatus.NOT_FOUND, new NotFoundException(Course.class.getName() + "[" + id + "]"))
                     );
         }catch (Exception ex){
             logger.error(ex.getMessage());
@@ -50,10 +50,10 @@ public class LessonController{
     }
 
     @Post(value = "/", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    public ApplicationResponse<LessonDto> createLesson(@Body LessonDto body) {
+    public ApplicationResponse<CourseDto> createNewCourse(@Body CourseDto body) {
         try {
             return ApplicationResponse.ok(
-                    lessonService.save(body)
+                    courseService.save(body)
             );
 
         } catch (Exception ex) {
@@ -62,27 +62,27 @@ public class LessonController{
         }
     }
 
-//    @Delete(value = "/{id}")
-//    public ApplicationResponse<String> delete(
-//            long id
-//    ) {
-//        try {
-//            lessonService.delete(id);
-//            return ApplicationResponse.ok("Курс удалён");
-//        } catch (Exception ex) {
-//            logger.error(ex.getMessage());
-//            throw new RuntimeException(ex);
-//        }
-//    }
+    @Delete(value = "/{id}")
+    public ApplicationResponse<String> deleteCourse(
+            long id
+    ) {
+        try {
+            courseService.delete(id);
+            return ApplicationResponse.ok("Курс удалён");
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            throw new RuntimeException(ex);
+        }
+    }
 
 
 
     @Patch(value = "/", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    public ApplicationResponse<LessonDto> updateNews(
-            @Body LessonDto update
+    public ApplicationResponse<CourseDto> updateCourse(
+            @Body CourseDto update
     ) {
         try {
-            return ApplicationResponse.ok(lessonService.update(update));
+            return ApplicationResponse.ok(courseService.update(update));
         } catch (Exception ex) {
             logger.error(ex.getMessage());
             throw new RuntimeException(ex);

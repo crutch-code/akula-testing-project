@@ -41,4 +41,6 @@ public class TeachRepository {
         }
         return Page.of(teaches, pageable, count);
     }
+
+    
 }

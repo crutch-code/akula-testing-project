@@ -5,11 +5,15 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "question")
 public class Question {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_id_seq")
+    @SequenceGenerator(name = "question_id_seq", sequenceName = "question_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -30,17 +34,52 @@ public class Question {
     @JoinColumn(name = "tid", nullable = false)
     private Test tid;
 
-    public Question(Long id, @NotNull String title, @NotNull Integer type, @NotNull Integer points, @NotNull Test tid) {
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "qid")
+    private Set<Answer> answers = new LinkedHashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "qid")
+    private Set<Comparison> comparisons = new LinkedHashSet<>();
+
+
+
+    public Question(Long id, @NotNull String title, @NotNull Integer type, @NotNull Integer points) {
         this.id = id;
         this.title = title;
         this.type = type;
         this.points = points;
-        this.tid = tid;
     }
 
     public Question() {
 
     }
+
+
+    public Set<Comparison> getComparisons() {
+        return comparisons;
+    }
+
+    public void setComparisons(Set<Comparison> comparisons) {
+        this.comparisons = comparisons;
+    }
+
+    public Set<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Set<Answer> answers) {
+        this.answers = answers;
+    }
+
+    public Test getTid() {
+        return tid;
+    }
+
+    public void setTid(Test tid) {
+        this.tid = tid;
+    }
+
+
+
 
     public Long getId() {
         return id;
@@ -74,11 +113,4 @@ public class Question {
         this.points = points;
     }
 
-    public Test getTid() {
-        return tid;
-    }
-
-    public void setTid(Test tid) {
-        this.tid = tid;
-    }
 }

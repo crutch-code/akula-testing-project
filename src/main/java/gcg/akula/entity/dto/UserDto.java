@@ -4,6 +4,7 @@ package gcg.akula.entity.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import gcg.akula.entity.jpa.User;
 import io.micronaut.serde.annotation.Serdeable;
+import jakarta.validation.constraints.NotNull;
 
 @Serdeable
 public class UserDto implements DTO<User> {
@@ -17,10 +18,17 @@ public class UserDto implements DTO<User> {
     private UserDto boss;
     private DepartmentDto department;
     private StorageDto photo;
+    @NotNull
+    private Boolean disabled = false;
+
 
     @Override
     public User toEntity() {
-        return new User(id, id1c, fio, login, password, boss == null ? null : boss.toEntity(), department.toEntity(), photo.toEntity());
+        return new User(
+                id, id1c, fio, login,
+                password, boss == null ? null : boss.toEntity(),
+                department.toEntity(), photo.toEntity(), disabled
+        );
     }
 
     public UserDto(User user) {
@@ -34,6 +42,7 @@ public class UserDto implements DTO<User> {
         }
         department = new DepartmentDto(user.getDepartment());
         photo = new StorageDto(user.getPhoto(), true);
+        disabled = user.getDisabled();
     }
 
 
@@ -95,5 +104,13 @@ public class UserDto implements DTO<User> {
 
     public void setPhoto(StorageDto photo) {
         this.photo = photo;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
 }
