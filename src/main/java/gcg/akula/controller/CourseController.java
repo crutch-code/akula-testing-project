@@ -1,15 +1,11 @@
 package gcg.akula.controller;
 
-import gcg.akula.entity.dto.CourseDto;
-import gcg.akula.entity.dto.NewsDto;
+import gcg.akula.entity.dto.course.CourseDto;
 import gcg.akula.entity.jpa.Course;
-import gcg.akula.entity.jpa.News;
 import gcg.akula.entity.response.ApplicationResponse;
 import gcg.akula.exception.NotFoundException;
 import gcg.akula.service.CourseService;
 import gcg.akula.service.UserService;
-import io.micronaut.data.model.Page;
-import io.micronaut.data.model.Pageable;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;

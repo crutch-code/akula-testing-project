@@ -54,6 +54,7 @@ public class User {
     public User() {
     }
 
+
     public User(
             Long id, String id1c, String fio,
             String login, String password, User boss,

@@ -9,7 +9,7 @@ import gcg.akula.entity.jpa.Test;
 import java.io.Serializable;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class FlatTestDto implements Serializable, DTO<Test> {
+public class FlatTestDto implements DTO<Test> {
 
     protected Long id;
     protected String theme;
@@ -33,24 +33,27 @@ public class FlatTestDto implements Serializable, DTO<Test> {
         return id;
     }
 
-    public void setId(Long id) {
+    public FlatTestDto setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getTheme() {
         return theme;
     }
 
-    public void setTheme(String theme) {
+    public FlatTestDto setTheme(String theme) {
         this.theme = theme;
+        return this;
     }
 
     public Integer getMinBall() {
         return minBall;
     }
 
-    public void setMinBall(Integer minBall) {
+    public FlatTestDto setMinBall(Integer minBall) {
         this.minBall = minBall;
+        return this;
     }
 
     @Override

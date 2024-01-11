@@ -7,6 +7,7 @@ import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.data.repository.PageableRepository;
 import io.micronaut.transaction.annotation.ReadOnly;
+import io.micronaut.transaction.annotation.Transactional;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
@@ -32,5 +33,19 @@ public abstract class LessonRepository implements PageableRepository<Lesson, Lon
                 .setFirstResult((int) pageable.getOffset())
                 .getResultList();
         return Page.of(list, pageable, count);
+    }
+
+    @Transactional
+    public void disable(Long id){
+        manager.createQuery("update Lesson as t set t.disabled = true where t.id =:id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    @Transactional
+    public void enable(Long id){
+        manager.createQuery("update Lesson as t set t.disabled = false where t.id =:id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 }

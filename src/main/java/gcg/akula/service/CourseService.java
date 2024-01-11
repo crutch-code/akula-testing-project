@@ -1,20 +1,12 @@
 package gcg.akula.service;
 
-import gcg.akula.entity.dto.CourseDto;
-import gcg.akula.entity.dto.CourseDto;
+import gcg.akula.entity.dto.course.CourseDto;
 import gcg.akula.repository.CourseRepository;
-import gcg.akula.repository.NewsRepository;
 import gcg.akula.repository.UserCourseRepository;
-import gcg.akula.repository.UserLessonRepository;
-import io.micronaut.data.model.Page;
-import io.micronaut.data.model.Pageable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Singleton
 public class CourseService {
@@ -29,7 +21,6 @@ public class CourseService {
     UserCourseRepository userCourseRepository;
 
     public Optional<CourseDto> getCourseFlat(long cid, long uid) {
-
         return  courseRepository
                 .findById(cid)
                 .map(m -> {
@@ -48,7 +39,11 @@ public class CourseService {
     }
 
     public void delete(Long id){
-        courseRepository.deleteById(id);
+        courseRepository.disable(id);
+    }
+
+    public void enable(Long id){
+        courseRepository.enable(id);
     }
 
     public CourseDto update(CourseDto update){

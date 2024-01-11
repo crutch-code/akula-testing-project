@@ -1,13 +1,10 @@
 package gcg.akula.controller;
 
 
-import gcg.akula.entity.dto.CourseDto;
 import gcg.akula.entity.dto.lesson.LessonDto;
-import gcg.akula.entity.jpa.Course;
 import gcg.akula.entity.jpa.Lesson;
 import gcg.akula.entity.response.ApplicationResponse;
 import gcg.akula.exception.NotFoundException;
-import gcg.akula.service.CourseService;
 import gcg.akula.service.LessonService;
 import gcg.akula.service.UserService;
 import io.micronaut.http.HttpStatus;
@@ -62,23 +59,34 @@ public class LessonController{
         }
     }
 
-//    @Delete(value = "/{id}")
-//    public ApplicationResponse<String> delete(
-//            long id
-//    ) {
-//        try {
-//            lessonService.delete(id);
-//            return ApplicationResponse.ok("Курс удалён");
-//        } catch (Exception ex) {
-//            logger.error(ex.getMessage());
-//            throw new RuntimeException(ex);
-//        }
-//    }
+    @Delete(value = "/{id}")
+    public ApplicationResponse<String> delete(
+            long id
+    ) {
+        try {
+            lessonService.delete(id);
+            return ApplicationResponse.ok("Курс удалён");
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            throw new RuntimeException(ex);
+        }
+    }
 
-
+    @Get(value = "/enable/{id}")
+    public ApplicationResponse<String> enable(
+            long id
+    ) {
+        try {
+            lessonService.delete(id);
+            return ApplicationResponse.ok("Курс удалён");
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            throw new RuntimeException(ex);
+        }
+    }
 
     @Patch(value = "/", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    public ApplicationResponse<LessonDto> updateNews(
+    public ApplicationResponse<LessonDto> updateLesson(
             @Body LessonDto update
     ) {
         try {
@@ -88,4 +96,7 @@ public class LessonController{
             throw new RuntimeException(ex);
         }
     }
+
+
+
 }

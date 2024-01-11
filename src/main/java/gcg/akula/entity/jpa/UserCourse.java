@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "user_course")
 public class UserCourse {
@@ -38,5 +36,28 @@ public class UserCourse {
 
     public Long getId() {
         return id;
+    }
+
+    public UserCourse setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public User getUid() {
+        return uid;
+    }
+
+    public UserCourse setUid(User uid) {
+        this.uid = uid;
+        return this;
+    }
+
+    public Course getCid() {
+        return cid;
+    }
+
+    public UserCourse setCid(Course cid) {
+        this.cid = cid;
+        return this;
     }
 }

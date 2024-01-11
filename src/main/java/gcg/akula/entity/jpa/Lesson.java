@@ -30,8 +30,6 @@ public class Lesson {
     @Column(name = "description", length = Integer.MAX_VALUE)
     private String description;
 
-
-
     @Column(name = "index", nullable = false)
     private Integer index;
 
@@ -42,8 +40,9 @@ public class Lesson {
     @JoinColumn(name = "cid")
     private Course cid;
 
-    @Transient
-    private Integer status;
+    @NotNull
+    @Column(name = "disabled", nullable = false)
+    private Boolean disabled = false;
 
 
     public Course getCid() {
@@ -55,27 +54,27 @@ public class Lesson {
     }
 
 
-    public Lesson(Long id, @NotNull String name, String content, String description, Integer index, Set<Test> tests) {
+    public Lesson(Long id, String name, String content, String description, Integer index, Set<Test> tests, Course cid, @NotNull Boolean disabled) {
         this.id = id;
         this.name = name;
         this.content = content;
         this.description = description;
         this.index = index;
         this.tests = tests;
+        this.cid = cid;
+        this.disabled = disabled;
     }
 
-    public Lesson(
-            Long id, @NotNull String name, String content,
-            String description, Integer index, Set<Test> tests, Integer status
-    ) {
+
+    public Lesson(Long id, String name, String content, String description, Integer index, Set<Test> tests, @NotNull Boolean disabled) {
         this.id = id;
         this.name = name;
         this.content = content;
         this.description = description;
         this.index = index;
         this.tests = tests;
+        this.disabled = disabled;
     }
-
 
     public Lesson() {
 
@@ -129,11 +128,12 @@ public class Lesson {
         this.tests = tests;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Boolean getDisabled() {
+        return disabled;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
+
 }

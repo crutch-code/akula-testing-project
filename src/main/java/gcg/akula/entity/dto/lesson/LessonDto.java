@@ -13,15 +13,17 @@ import java.util.stream.Collectors;
 @Serdeable
 public class LessonDto extends FlatLessonDto{
 
-    String content;
-    String description;
-    List<FlatTestDto> tests;
+    private String content;
+    private String description;
+    private List<FlatTestDto> tests;
 
+    private Boolean disabled;
     @Override
     public Lesson toEntity() {
         return new Lesson(
                 id, name, content, description, index,
-                tests == null ? new HashSet<>() : tests.stream().map(FlatTestDto::toEntity).collect(Collectors.toSet())
+                tests == null ? new HashSet<>() : tests.stream().map(FlatTestDto::toEntity).collect(Collectors.toSet()),
+                disabled
         );
     }
 
@@ -29,15 +31,6 @@ public class LessonDto extends FlatLessonDto{
     }
 
 
-    public LessonDto(
-            Long id, String name, Integer index, Boolean completed,
-            String content, String description, List<FlatTestDto> tests
-    ) {
-        super(id, name, index, completed);
-        this.content = content;
-        this.description = description;
-        this.tests = tests;
-    }
 
     public LessonDto(Lesson entity){
         this.id = entity.getId();
@@ -55,23 +48,26 @@ public class LessonDto extends FlatLessonDto{
         return content;
     }
 
-    public void setContent(String content) {
+    public LessonDto setContent(String content) {
         this.content = content;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public LessonDto setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public List<FlatTestDto> getTests() {
         return tests;
     }
 
-    public void setTests(List<FlatTestDto> tests) {
+    public LessonDto setTests(List<FlatTestDto> tests) {
         this.tests = tests;
+        return this;
     }
 }

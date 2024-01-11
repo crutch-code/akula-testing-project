@@ -2,6 +2,7 @@ package gcg.akula.entity.jpa;
 
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Serdeable
 @Entity
@@ -15,13 +16,19 @@ public class Department {
 
     private String name;
 
+    @NotNull
+    @Column(name = "disabled", nullable = false)
+    private Boolean disabled = false;
+
+
 
     public Department() {
     }
 
-    public Department(Long id, String name) {
+    public Department(Long id, String name, @NotNull Boolean disabled) {
         this.id = id;
         this.name = name;
+        this.disabled = disabled;
     }
 
     public Long getId() {
@@ -38,6 +45,14 @@ public class Department {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
 
 }

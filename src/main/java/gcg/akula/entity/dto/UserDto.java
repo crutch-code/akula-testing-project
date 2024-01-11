@@ -31,6 +31,9 @@ public class UserDto implements DTO<User> {
         );
     }
 
+    public UserDto() {
+    }
+
     public UserDto(User user) {
         id = user.getId();
         id1c = user.getId1c();
@@ -50,67 +53,80 @@ public class UserDto implements DTO<User> {
         return id;
     }
 
-    public void setId(Long id) {
+    public UserDto setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getId1c() {
         return id1c;
     }
 
-    public void setId1c(String id1c) {
+    public UserDto setId1c(String id1c) {
         this.id1c = id1c;
+        return this;
     }
 
     public String getFio() {
         return fio;
     }
 
-    public void setFio(String fio) {
+    public UserDto setFio(String fio) {
         this.fio = fio;
+        return this;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
+    public UserDto setLogin(String login) {
         this.login = login;
+        return this;
     }
 
-    public void setPassword(String password) {
+    public String getPassword() {
+        return password;
+    }
+
+    public UserDto setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public UserDto getBoss() {
         return boss;
     }
 
-    public void setBoss(UserDto boss) {
+    public UserDto setBoss(UserDto boss) {
         this.boss = boss;
+        return this;
     }
 
     public DepartmentDto getDepartment() {
         return department;
     }
 
-    public void setDepartment(DepartmentDto department) {
+    public UserDto setDepartment(DepartmentDto department) {
         this.department = department;
+        return this;
     }
 
     public StorageDto getPhoto() {
         return photo;
     }
 
-    public void setPhoto(StorageDto photo) {
+    public UserDto setPhoto(StorageDto photo) {
         this.photo = photo;
+        return this;
     }
 
     public Boolean getDisabled() {
         return disabled;
     }
 
-    public void setDisabled(Boolean disabled) {
+    public UserDto setDisabled(Boolean disabled) {
         this.disabled = disabled;
+        return this;
     }
 }

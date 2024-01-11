@@ -36,4 +36,5 @@ public abstract class UserLessonRepository implements CrudRepository<UserLesson,
                 .setParameter("score", score)
                 .executeUpdate();
     }
+
 }

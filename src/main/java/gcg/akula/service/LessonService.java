@@ -1,12 +1,8 @@
 package gcg.akula.service;
 
 
-import gcg.akula.entity.dto.CourseDto;
-import gcg.akula.entity.dto.lesson.FlatLessonDto;
 import gcg.akula.entity.dto.lesson.LessonDto;
-import gcg.akula.entity.jpa.Lesson;
 import gcg.akula.repository.LessonRepository;
-import io.micronaut.data.model.Page;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -44,5 +40,13 @@ public class LessonService {
         return new LessonDto(
                 lessonRepository.update(update.toEntity())
         );
+    }
+
+    public void delete(Long id) {
+        lessonRepository.disable(id);
+    }
+
+    public void enable(Long id) {
+        lessonRepository.enable(id);
     }
 }

@@ -6,6 +6,7 @@ import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.data.repository.CrudRepository;
 import io.micronaut.transaction.annotation.ReadOnly;
+import io.micronaut.transaction.annotation.Transactional;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
@@ -33,5 +34,19 @@ public abstract class NewsRepository implements CrudRepository<News, Long> {
                 .setFirstResult((int) pageable.getOffset())
                 .getResultList();
         return Page.of(news, pageable, count);
+    }
+
+    @Transactional
+    public void disable(Long id){
+        entityManager.createQuery("update News as t set t.disabled = true where t.id =:id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    @Transactional
+    public void enable(Long id){
+        entityManager.createQuery("update News as t set t.disabled = false where t.id =:id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 }

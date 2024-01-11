@@ -24,50 +24,75 @@ public class FlatLessonDto implements Serializable, DTO <Lesson> {
 
     protected Boolean completed = false;
 
+    private Boolean disabled = false;
+
+
     public FlatLessonDto() {
     }
 
-    public FlatLessonDto(Long id, String name, Integer index, Boolean completed) {
+    public FlatLessonDto(Lesson entity) {
+        this.id = entity.getId();
+        this.index = entity.getIndex();
+        this.name = entity.getName();
+        this.completed = null;
+        this.disabled = entity.getDisabled();
+    }
+
+    public FlatLessonDto(Long id, String name, Integer index, Boolean completed, Boolean disabled) {
         this.id = id;
         this.name = name;
         this.index = index;
         this.completed = completed;
+        this.disabled = disabled;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public FlatLessonDto setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public FlatLessonDto setName(String name) {
         this.name = name;
+        return this;
     }
 
     public Integer getIndex() {
         return index;
     }
 
-    public void setIndex(Integer index) {
+    public FlatLessonDto setIndex(Integer index) {
         this.index = index;
+        return this;
     }
 
     public Boolean getCompleted() {
         return completed;
     }
 
-    public void setCompleted(Boolean completed) {
+    public FlatLessonDto setCompleted(Boolean completed) {
         this.completed = completed;
+        return this;
     }
 
     @Override
     public Lesson toEntity() {
-        return new Lesson(id, name, null, null , index, null);
+        return new Lesson(id, name, null, null , index, null, disabled);
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public FlatLessonDto setDisabled(Boolean disabled) {
+        this.disabled = disabled;
+        return this;
     }
 }

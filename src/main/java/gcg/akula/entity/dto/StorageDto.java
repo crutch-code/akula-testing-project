@@ -41,31 +41,35 @@ public class StorageDto implements DTO<Storage> {
         return id;
     }
 
-    public void setId(Long id) {
+    public StorageDto setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public StorageDto setName(String name) {
         this.name = name;
-    }
-
-    public byte[] getData() {
-        return data;
-    }
-
-    public void setData(byte[] data) {
-        this.data = data;
+        return this;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public StorageDto setType(String type) {
         this.type = type;
+        return this;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public StorageDto setData(byte[] data) {
+        this.data = data;
+        return this;
     }
 }

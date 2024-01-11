@@ -28,14 +28,21 @@ public class Course {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "cid")
     private List<Lesson> lessons = new ArrayList<>();
 
+    @NotNull
+    @Column(name = "disabled", nullable = false)
+    private Boolean disabled = false;
+
+
+
 
     public Course() {
     }
 
-    public Course(Long id, @NotNull String name, List<Lesson> lessons) {
+    public Course(Long id, @NotNull String name, List<Lesson> lessons, @NotNull Boolean disabled) {
         this.id = id;
         this.name = name;
         this.lessons = lessons;
+        this.disabled = disabled;
     }
 
     public Long getId() {
@@ -60,5 +67,13 @@ public class Course {
 
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
 }

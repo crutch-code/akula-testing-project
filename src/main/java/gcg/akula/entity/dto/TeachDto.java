@@ -23,31 +23,35 @@ public class TeachDto {
         return id;
     }
 
-    public void setId(Long id) {
+    public TeachDto setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public TeachDto setName(String name) {
         this.name = name;
+        return this;
     }
 
     public int getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public TeachDto setType(int type) {
         this.type = type;
+        return this;
     }
 
     public String getTarget() {
         return target;
     }
 
-    public void setTarget(String target) {
+    public TeachDto setTarget(String target) {
         this.target = target;
+        return this;
     }
 }

@@ -38,14 +38,20 @@ public class News {
     @Column(name = "publish_date", columnDefinition = "timestamp(6) default now()")
     private LocalDateTime publishDate;
 
+    @NotNull
+    @Column(name = "disabled", nullable = false)
+    private Boolean disabled = false;
 
-    public News(@NotNull Long id, @NotNull String title, @NotNull String content, @NotNull User author, LocalDateTime publishDate, Storage photo) {
+
+
+    public News(@NotNull Long id, @NotNull String title, @NotNull String content, @NotNull User author, LocalDateTime publishDate, Storage photo, @NotNull Boolean disabled) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.author = author;
         this.publishDate = publishDate;
         this.photo = photo;
+        this.disabled = disabled;
     }
 
     public News() {
@@ -99,4 +105,13 @@ public class News {
     public void setPhoto(Storage photo) {
         this.photo = photo;
     }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
+    }
+
 }
