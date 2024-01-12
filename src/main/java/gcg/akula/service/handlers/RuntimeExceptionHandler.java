@@ -17,7 +17,7 @@ public class RuntimeExceptionHandler implements ExceptionHandler<RuntimeExceptio
     public HttpResponse<ApplicationResponse<String>> handle(HttpRequest request, RuntimeException exception) {
         return HttpResponse.serverError(ApplicationResponse.fail(
                 HttpStatus.INTERNAL_SERVER_ERROR,
-                exception.getLocalizedMessage(),
+                exception.getMessage(),
                 exception)
         );
     }
