@@ -1,5 +1,6 @@
 package gcg.akula.entity.jpa;
 
+import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "course")
+@Serdeable
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_id_seq")

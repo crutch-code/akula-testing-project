@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Serdeable
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+
 public final class TestDto extends FlatTestDto {
 
     private List<QuestionDto> questions;
@@ -44,7 +45,8 @@ public final class TestDto extends FlatTestDto {
     @Override
     public Test toEntity() {
         Test val = super.toEntity();
-        val.setQuestions(questions.stream().map(QuestionDto::toEntity).collect(Collectors.toSet()));
+        if(this.questions != null)
+            val.setQuestions(questions.stream().map(QuestionDto::toEntity).collect(Collectors.toSet()));
         return val;
     }
 

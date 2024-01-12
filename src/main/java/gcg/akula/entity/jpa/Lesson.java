@@ -1,6 +1,7 @@
 package gcg.akula.entity.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "lesson")
+@Serdeable
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lesson_id_seq")

@@ -1,5 +1,6 @@
 package gcg.akula.entity.jpa;
 
+import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "comparison")
+@Serdeable
 public class Comparison {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comparison_id_seq")

@@ -1,18 +1,22 @@
 package gcg.akula.entity.dto.test;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gcg.akula.entity.dto.DTO;
 import gcg.akula.entity.dto.lesson.FlatLessonDto;
 import gcg.akula.entity.jpa.Test;
+import io.micronaut.serde.annotation.Serdeable;
 
 import java.io.Serializable;
+
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class FlatTestDto implements DTO<Test> {
 
     protected Long id;
     protected String theme;
+    @JsonProperty("min_ball")
     protected Integer minBall;
 
     public FlatTestDto() {

@@ -1,7 +1,9 @@
 package gcg.akula.service;
 
 
+import gcg.akula.entity.dto.lesson.LessonDto;
 import gcg.akula.entity.dto.test.TestDto;
+import gcg.akula.entity.jpa.Test;
 import gcg.akula.repository.TestRepository;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -14,13 +16,15 @@ public class TestService {
     @Inject
     TestRepository testRepository;
 
-    public Optional<TestDto> getCourseFlat(long tid) {
+    public Optional<TestDto> getTestById(long tid) {
         return  testRepository.findById(tid).map(TestDto::new);
     }
 
-    public TestDto save(TestDto test) {
+    public TestDto save(TestDto test, Long lid) {
+        Test target = test.toEntity();
+        target.setLid(new LessonDto().setId(lid).toEntity());
         return new TestDto(
-                testRepository.save(test.toEntity())
+                testRepository.save(target)
         );
     }
 
