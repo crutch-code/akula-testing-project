@@ -1,6 +1,5 @@
 package gcg.akula.repository;
 
-import gcg.akula.entity.jpa.Course;
 import gcg.akula.entity.jpa.Lesson;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.model.Page;
@@ -12,6 +11,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Repository
 public abstract class LessonRepository implements PageableRepository<Lesson, Long>  {
@@ -33,6 +34,17 @@ public abstract class LessonRepository implements PageableRepository<Lesson, Lon
                 .setFirstResult((int) pageable.getOffset())
                 .getResultList();
         return Page.of(list, pageable, count);
+    }
+
+    public Optional<Lesson> updateWithCourse(Lesson entity){
+         AtomicReference<Optional<Lesson>> target = new AtomicReference<>(findById(entity.getId()));
+         target.get().ifPresent(v ->{
+             entity.setCid(target.get().get().getCid());
+             target.set(Optional.of(
+                     update(entity)
+             ));
+         });
+         return target.get();
     }
 
     @Transactional

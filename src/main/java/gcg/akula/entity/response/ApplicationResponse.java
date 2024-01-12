@@ -54,7 +54,7 @@ public class ApplicationResponse<T> {
     }
 
     public static <B> ApplicationResponse<B> fail(Throwable reason) {
-        return new ApplicationResponse(HttpStatus.BAD_REQUEST, reason);
+        return new ApplicationResponse(HttpStatus.BAD_REQUEST, reason.getMessage(), reason);
     }
 
     public static <B> ApplicationResponse<B> fail(HttpStatus status, Throwable reason) {

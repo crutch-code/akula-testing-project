@@ -1,7 +1,9 @@
 package gcg.akula.service;
 
 
+import gcg.akula.entity.dto.course.CourseDto;
 import gcg.akula.entity.dto.lesson.LessonDto;
+import gcg.akula.entity.jpa.Lesson;
 import gcg.akula.repository.LessonRepository;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -23,23 +25,24 @@ public class LessonService {
     @Inject
     UserLessonService userLessonService;
     public Optional<LessonDto> getLessonsById(long lid, long uid){
-        return lessonRepository.findById(lid).map(m -> {
-            LessonDto ld = new LessonDto(m);
-            ld.setCompleted(userLessonService.isCompleted(lid, uid));
-            return ld;
-        });
-    }
-
-    public LessonDto save(LessonDto body) {
-        return new LessonDto(
-                lessonRepository.save(body.toEntity())
+        return lessonRepository.findById(lid).map(m ->
+         (LessonDto) new LessonDto(m)
+                 .setCompleted(
+                         userLessonService.isCompleted(lid, uid)
+                 )
         );
     }
 
-    public LessonDto update(LessonDto update){
+    public LessonDto save(LessonDto body, Long id) {
+        Lesson target = body.toEntity();
+        target.setCid(new CourseDto().setId(id).toEntity());
         return new LessonDto(
-                lessonRepository.update(update.toEntity())
+                lessonRepository.save(target)
         );
+    }
+
+    public Optional<LessonDto> update(LessonDto update){
+        return lessonRepository.updateWithCourse(update.toEntity()).map(LessonDto::new);
     }
 
     public void delete(Long id) {

@@ -18,14 +18,14 @@ public class MembershipService {
     @Inject
     UserCourseService userCourseService;
 
-    public ApplicationResponse<?> assignMembership(MembershipRequest target) {
+    public ApplicationResponse<?> assignMembership(MembershipRequest target) throws BadRequestException {
         switch (target.getResourceType()){
             case 1 : return courseAssignation(target);
             default : throw new BadRequestException("Invalid resource type for membership assignation");
         }
     }
 
-    public ApplicationResponse<?> courseAssignation(MembershipRequest request){
+    public ApplicationResponse<?> courseAssignation(MembershipRequest request) throws BadRequestException {
         switch (request.getConsumerType()){
             case 1 ->{
                 return ApplicationResponse.ok(

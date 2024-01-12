@@ -16,15 +16,23 @@ public class LessonDto extends FlatLessonDto{
     private String content;
     private String description;
     private List<FlatTestDto> tests;
-
-    private Boolean disabled;
     @Override
     public Lesson toEntity() {
-        return new Lesson(
-                id, name, content, description, index,
-                tests == null ? new HashSet<>() : tests.stream().map(FlatTestDto::toEntity).collect(Collectors.toSet()),
-                disabled
+        Lesson val = super.toEntity();
+        val.setDisabled(disabled != null && disabled);
+        val.setContent(content);
+        val.setDescription(description);
+        val.setTests(tests == null ? new HashSet<>() :
+                tests.stream()
+                        .map(FlatTestDto::toEntity)
+                        .collect(Collectors.toSet())
         );
+//        return new Lesson(
+//                id, name, content, description, index,
+//                tests == null ? new HashSet<>() : tests.stream().map(FlatTestDto::toEntity).collect(Collectors.toSet()),
+//                disabled != null && disabled
+//        );
+        return val;
     }
 
     public LessonDto() {

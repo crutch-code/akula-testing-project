@@ -28,47 +28,26 @@ public class CourseController {
 
 
     @Get(value = "/{id}", produces = MediaType.APPLICATION_JSON)
-    public ApplicationResponse<CourseDto> getCourseById(long id) {
-        try {
-            Optional<CourseDto> news = courseService.getCourseFlat(
-                    id,
-                    userService.getCurrent().orElseThrow().getId()
-            );
-            return news
-                    .map(ApplicationResponse::ok)
-                    .orElseGet(() -> ApplicationResponse.fail(
-                            HttpStatus.NOT_FOUND, new NotFoundException(Course.class.getName() + "[" + id + "]"))
-                    );
-        }catch (Exception ex){
-            logger.error(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+    public ApplicationResponse<CourseDto> getCourseById(long id) throws NotFoundException {
+        Optional<CourseDto> news = courseService.getCourseFlat(
+                id,
+                userService.getCurrent().orElseThrow().getId()
+        );
+        return news.map(ApplicationResponse::ok)
+                    .orElseThrow(()-> new NotFoundException(Course.class.getName() + "[" + id + "]"));
     }
 
     @Post(value = "/", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     public ApplicationResponse<CourseDto> createNewCourse(@Body CourseDto body) {
-        try {
-            return ApplicationResponse.ok(
-                    courseService.save(body)
-            );
-
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+        return ApplicationResponse.ok(courseService.save(body));
     }
 
     @Delete(value = "/{id}")
     public ApplicationResponse<String> deleteCourse(
             long id
     ) {
-        try {
-            courseService.delete(id);
-            return ApplicationResponse.ok("Курс удалён");
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+        courseService.delete(id);
+        return ApplicationResponse.ok("Курс удалён");
     }
 
 
@@ -77,11 +56,6 @@ public class CourseController {
     public ApplicationResponse<CourseDto> updateCourse(
             @Body CourseDto update
     ) {
-        try {
-            return ApplicationResponse.ok(courseService.update(update));
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+        return ApplicationResponse.ok(courseService.update(update));
     }
 }

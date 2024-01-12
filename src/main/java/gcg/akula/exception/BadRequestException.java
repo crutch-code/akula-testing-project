@@ -3,7 +3,7 @@ package gcg.akula.exception;
 import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable
-public class BadRequestException extends RuntimeException{
+public class BadRequestException extends Exception{
 
     private final Object request;
 

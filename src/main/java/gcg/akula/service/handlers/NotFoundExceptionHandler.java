@@ -1,8 +1,8 @@
 package gcg.akula.service.handlers;
 
-
 import gcg.akula.entity.response.ApplicationResponse;
 import gcg.akula.exception.BadRequestException;
+import gcg.akula.exception.NotFoundException;
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
@@ -11,21 +11,16 @@ import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.server.exceptions.ExceptionHandler;
 import jakarta.inject.Singleton;
 
-import java.util.Map;
-
 @Singleton
 @Primary
 @Produces
-public class BadRequestExceptionHandler implements ExceptionHandler<BadRequestException, HttpResponse<ApplicationResponse<?>>> {
+public class NotFoundExceptionHandler implements ExceptionHandler<NotFoundException, HttpResponse<ApplicationResponse<?>>> {
     @Override
-    public HttpResponse<ApplicationResponse<?>> handle(HttpRequest request, BadRequestException exception) {
-        return HttpResponse.badRequest(
+    public HttpResponse<ApplicationResponse<?>> handle(HttpRequest request, NotFoundException exception) {
+        return HttpResponse.notFound(
                 ApplicationResponse.fail(
-                        HttpStatus.BAD_REQUEST,
-                        Map.of(
-                                "message", exception.getMessage(),
-                                "request", exception.getRequest()
-                        ),
+                        HttpStatus.NOT_FOUND,
+                        exception.getLocalizedMessage(),
                         exception)
         );
     }

@@ -24,7 +24,7 @@ public class FlatLessonDto implements Serializable, DTO <Lesson> {
 
     protected Boolean completed = false;
 
-    private Boolean disabled = false;
+    protected Boolean disabled = false;
 
 
     public FlatLessonDto() {
@@ -88,11 +88,11 @@ public class FlatLessonDto implements Serializable, DTO <Lesson> {
     }
 
     public Boolean getDisabled() {
-        return disabled;
+        return disabled != null && disabled;
     }
 
     public FlatLessonDto setDisabled(Boolean disabled) {
-        this.disabled = disabled;
+        this.disabled = disabled != null && disabled;
         return this;
     }
 }

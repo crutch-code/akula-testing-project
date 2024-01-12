@@ -28,29 +28,18 @@ public class NewsController {
     public ApplicationResponse<Page<NewsDto>> getNews(
             Pageable pageable
     ) {
-        try {
-            return ApplicationResponse.ok(
-                    newsService.getNews(
-                            pageable
-                    )
-            );
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+        return ApplicationResponse.ok(
+                newsService.getNews(
+                        pageable
+                )
+        );
     }
 
     @Post(value = "/", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     public ApplicationResponse<NewsDto> publishNews(@Body NewsDto body) {
-        try {
-            return ApplicationResponse.ok(
-                    newsService.publish(body)
-            );
-
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+        return ApplicationResponse.ok(
+                newsService.publish(body)
+        );
     }
 
     @Delete(value = "/{id}")
@@ -62,22 +51,17 @@ public class NewsController {
     }
 
     @Get(value = "/{id}")
-    public ApplicationResponse<NewsDto> getNewsById(long id) {
+    public ApplicationResponse<NewsDto> getNewsById(long id) throws NotFoundException {
         Optional<NewsDto> news = newsService.getNewsById(id);
         return news
                 .map(ApplicationResponse::ok)
-                .orElseGet(() -> ApplicationResponse.fail(HttpStatus.NOT_FOUND, new NotFoundException(News.class.getName() + "[" + id + "]")));
+                .orElseThrow(() -> new NotFoundException(News.class.getName() + "[" + id + "]"));
     }
 
     @Put(value = "/", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     public ApplicationResponse<NewsDto> updateNews(
             @Body NewsDto update
     ) {
-        try {
-            return ApplicationResponse.ok(newsService.update(update));
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+        return ApplicationResponse.ok(newsService.update(update));
     }
 }

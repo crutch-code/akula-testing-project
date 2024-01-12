@@ -4,6 +4,7 @@ package gcg.akula.controller;
 import gcg.akula.entity.dto.lesson.LessonDto;
 import gcg.akula.entity.jpa.Lesson;
 import gcg.akula.entity.response.ApplicationResponse;
+import gcg.akula.exception.BadRequestException;
 import gcg.akula.exception.NotFoundException;
 import gcg.akula.service.LessonService;
 import gcg.akula.service.UserService;
@@ -29,72 +30,50 @@ public class LessonController{
 
 
     @Get(value = "/{id}", produces = MediaType.APPLICATION_JSON)
-    public ApplicationResponse<LessonDto> getLessonsById(long id) {
-        try {
-            Optional<LessonDto> lessons = lessonService.getLessonsById(
-                    id,
-                    userService.getCurrent().orElseThrow().getId()
-            );
-            return lessons
-                    .map(ApplicationResponse::ok)
-                    .orElseGet(() -> ApplicationResponse.fail(
-                            HttpStatus.NOT_FOUND, new NotFoundException(Lesson.class.getName() + "[" + id + "]"))
-                    );
-        }catch (Exception ex){
-            logger.error(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+    public ApplicationResponse<LessonDto> getLessonsById(long id) throws NotFoundException {
+        Optional<LessonDto> lessons = lessonService.getLessonsById(
+                id,
+                userService.getCurrent().orElseThrow().getId()
+        );
+        return lessons
+                .map(ApplicationResponse::ok)
+                .orElseThrow(() -> new NotFoundException(Lesson.class.getName() + "[" + id + "]"));
     }
 
-    @Post(value = "/", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    public ApplicationResponse<LessonDto> createLesson(@Body LessonDto body) {
-        try {
-            return ApplicationResponse.ok(
-                    lessonService.save(body)
-            );
-
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+    @Post(value = "/{cid}", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    public ApplicationResponse<LessonDto> createLesson(
+            @Body LessonDto body,
+            long cid
+    ) {
+        return ApplicationResponse.ok(
+                    lessonService.save(body, cid)
+        );
     }
 
     @Delete(value = "/{id}")
     public ApplicationResponse<String> delete(
             long id
     ) {
-        try {
-            lessonService.delete(id);
-            return ApplicationResponse.ok("Курс удалён");
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+        lessonService.delete(id);
+        return ApplicationResponse.ok("Курс удалён");
     }
 
     @Get(value = "/enable/{id}")
     public ApplicationResponse<String> enable(
             long id
     ) {
-        try {
-            lessonService.delete(id);
-            return ApplicationResponse.ok("Курс удалён");
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+        lessonService.delete(id);
+        return ApplicationResponse.ok("Курс восстановлен");
     }
 
     @Patch(value = "/", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     public ApplicationResponse<LessonDto> updateLesson(
             @Body LessonDto update
-    ) {
-        try {
-            return ApplicationResponse.ok(lessonService.update(update));
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+    ) throws BadRequestException {
+            return lessonService.update(update).map(ApplicationResponse::ok).orElseThrow(
+                    ()-> new BadRequestException("Не найден урок с таким идентификатором," +
+                    " или есть нарушение целостности в теле запроса", update)
+            );
     }
 
 
